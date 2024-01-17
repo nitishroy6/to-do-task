@@ -10,6 +10,6 @@ class Task(models.Model):
     ]
 
     task_description = models.TextField()
-    task_status = models.IntegerField(choices=STATUS_CHOICES)
+    task_status = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
