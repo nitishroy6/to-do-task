@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .container {
+            display: inline-block;
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+        }
+    </style>
+    <title>Task Management UI</title>
+</head>
+<body>
+    <button onclick="showTasks('newTaskContainer')">New Task</button>
+    <button onclick="showTasks('progressContainer')">Move to Progress</button>
+    <button onclick="showTasks('completedContainer')">Move to Completed</button>
+
+    <div class="container" id="newTaskContainer">
+        <h3>New Task</h3>
+        <input type="checkbox" id="newTaskCheckbox"> Task 1
+        <input type="checkbox" id="newTaskCheckbox"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum natus numquam doloremque maiores, sed molestiae magnam. Cupiditate quos modi similique fugiat, assumenda dolorum dignissimos quibusdam et, distinctio suscipit, magnam corrupti!
+        <input type="checkbox" id="newTaskCheckbox"> sed molestiae magnam. Cupiditate quos modi similique fugiat, assumenda dolorum dignissimos quibusdam et
+        <input type="checkbox" id="newTaskCheckbox"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, corrupti sapiente excepturi architecto, quaerat perferendis deleniti nobis ducimus numquam eaque, voluptates aliquid aliquam nostrum! Ipsa voluptas provident nemo delectus nostrum?
+        <input type="checkbox" id="newTaskCheckbox"> Task 1
+        <input type="checkbox" id="newTaskCheckbox"> Task 1
+        <input type="checkbox" id="newTaskCheckbox"> Task 1
+    </div>
+
+    <div class="container" id="progressContainer">
+        <h3>Progress</h3>
+        <input type="checkbox" id="progressCheckbox"> Task 2
+        <input type="checkbox" id="progressCheckbox"> Task 2
+        <input type="checkbox" id="progressCheckbox"> Task 2
+        <input type="checkbox" id="progressCheckbox"> Task 2
+        <input type="checkbox" id="progressCheckbox"> Task 2
+        <input type="checkbox" id="progressCheckbox"> Task 2
+        <input type="checkbox" id="progressCheckbox"> Task 2
+    </div>
+
+    <div class="container" id="completedContainer">
+        <h3>Completed</h3>
+        <input type="checkbox" id="completedCheckbox"> Task 3
+        <input type="checkbox" id="completedCheckbox"> Task 3
+        <input type="checkbox" id="completedCheckbox"> Task 3
+        <input type="checkbox" id="completedCheckbox"> Task 3
+        <input type="checkbox" id="completedCheckbox"> Task 3
+        <input type="checkbox" id="completedCheckbox"> Task 3
+    </div>
+
+    <script>
+        // Function to show tasks for a specific container
+        function showTasks(containerId) {
+            // Hide all containers
+            document.getElementById('newTaskContainer').style.display = 'none';
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('completedContainer').style.display = 'none';
+
+            // Show the selected container
+            document.getElementById(containerId).style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -39,4 +39,4 @@ def task_edit(request, pk):
 
 def task_list(request):
     tasks = Task.objects.all()
-    return render(request, 'task_list.html', {'tasks': tasks})
+    return render(request, 'index.html', {'tasks': tasks})
