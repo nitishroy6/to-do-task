@@ -13,6 +13,10 @@ class TaskEncoder(DjangoJSONEncoder):
         return super().default(obj)
 
 
+#  -- Login Controller --
+# @ensure_csrf_cookie
+def login_controller(request):
+    return render(request,'login.html')
 @ensure_csrf_cookie
 def task_create(request):
     if request.method == 'POST':
@@ -46,13 +50,27 @@ def move_to_in_progress(request):
 
 @ensure_csrf_cookie
 def move_to_completed(request):
-    print('dddddd')
     if request.method == 'POST':
         task_ids = request.POST.getlist('task_ids[]')
         try:
             tasks = Task.objects.filter(id__in=task_ids)
             for task in tasks:
                 task.task_status = 2
+                task.save()
+
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+@ensure_csrf_cookie
+def move_to_hold(request):
+    if request.method == 'POST':
+        task_ids = request.POST.getlist('task_ids[]')
+        try:
+            tasks = Task.objects.filter(id__in=task_ids)
+            for task in tasks:
+                task.task_status = 3
                 task.save()
 
             return JsonResponse({'success': True})

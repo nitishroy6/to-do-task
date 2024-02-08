@@ -13,7 +13,37 @@
     {% load static %}
     
     <!-- <link rel="stylesheet" href="{% static 'static/css/style.css' %}"> </head> -->
-<body>
+<body style="background-color: rgb(221, 213, 213);">
+    <style>
+        .task-container-red {
+            border: 5px solid red;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+    
+        .task-container-yellow {
+            border: 5px solid yellow;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+    
+        .task-container-green {
+            border: 5px solid green;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+    
+        .task-container-blue {
+            border: 5px solid blue;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+    </style>
+    
     <header style="display:flex;justify-content: center;">
         <h1 >Task Management</h1>
     </header>
@@ -23,54 +53,84 @@
 
        <section class="task-lists" style="display: flex;flex-direction: row;justify-content: space-around;">
         <div>
-            <section class="task-creation">
-                <button class="new-task-button" onclick="openTaskModal()">New Task</button>
+            <section class="task-actions">
+                <button class="move-to-in-hold btn btn-primary" onclick="move_to_hold()">Move Selected to On Hold</button>
             </section>
-            <h4>Yet to Start</h4>
-    <ul class="task-list" id="new_task">
-        {% for task in tasks %}
-            {% if task.task_status == 0 %}
-                <li>
-                    <input type="checkbox" class="task-checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
-                    <label for="task-{{ task.id }}">{{ task.task_description }}</label>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+        
+        <div class="task-container task-container-blue">
+            
+            <h4>On Hold</h4>
+        <ul class="task-list">
+            {% for task in tasks %}
+                {% if task.task_status == 3 %}
+                    <li>
+                        <input type="checkbox" class="task-checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
+                        <label for="task-{{ task.id }}">{{ task.task_description }}</label>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
+        <div>
+            <section class="task-creations ">
+                <button class="new-task-button btn-secondary" onclick="openTaskModal()">New Task</button>
+            </section>
+            <div class="task-container task-container-red">
+               
+                <h4>Yet to Start</h4>
+        <ul class="task-list" id="new_task">
+            {% for task in tasks %}
+                {% if task.task_status == 0 %}
+                    <li>
+                        <input type="checkbox" class="task-checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
+                        <label for="task-{{ task.id }}">{{ task.task_description }}</label>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+            </div>
         </div>
 
     <div>
         <section class="task-actions">
-            <button class="move-to-in-progress" onclick="move_to_progress()">Move Selected to In Progress</button>
+            <button class="move-to-in-progress btn btn-warning" onclick="move_to_progress()">Move Selected to In Progress</button>
         </section>
-        <h4>In Progress</h4>
-    <ul class="task-list">
-        {% for task in tasks %}
-            {% if task.task_status == 1 %}
-                <li>
-                    <input type="checkbox" class="task-checkboxx" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
-                    <label for="task-{{ task.id }}">{{ task.task_description }}</label>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+        <div class="task-container task-container-yellow">
+            
+            <h4>In Progress</h4>
+        <ul class="task-list">
+            {% for task in tasks %}
+                {% if task.task_status == 1 %}
+                    <li>
+                        <input type="checkbox" class="task-checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
+                        <label for="task-{{ task.id }}">{{ task.task_description }}</label>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        </div>
     </div>
+    
 
     <div>
         <section class="task-actions">
-            <button class="move-to-completed" onclick="move_to_completed()">Move Selected to Completed</button>
+            <button  class="move-to-completed btn btn-success" onclick="move_to_completed()">Move Selected to Completed</button>
         </section>
-        <h4>Completed</h4>
-    <ul class="task-list" id="completed_task">
-        {% for task in tasks %}
-            {% if task.task_status == 2 %}
-            <li>
-                <!-- <input type="checkbox" class="task-checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}"> -->
-                <label for="task-{{ task.id }}">{{ task.task_description }}</label>
-            </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+        <div class="task-container task-container-green">
+            
+            <h4>Completed</h4>
+        <ul class="task-list" id="completed_task">
+            {% for task in tasks %}
+                {% if task.task_status == 2 %}
+                <li>
+                    <!-- <input type="checkbox" class="task-checkbox" id="task-{{ task.id }}" data-task-id="{{ task.id }}"> -->
+                    <label for="task-{{ task.id }}">{{ task.task_description }}</label>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        </div>
     </div>
 </section>
     </main>
@@ -164,7 +224,7 @@ function move_to_progress() {
 
 
 function move_to_completed() {
-    const selectedTasks = $('.task-checkboxx:checked');
+    const selectedTasks = $('.task-checkbox:checked');
 
     if (selectedTasks.length > 0) {
         const taskIds = selectedTasks.map(function() {
@@ -178,6 +238,35 @@ function move_to_completed() {
                 if (data.success) {
                     selectedTasks.closest('li').remove();
                     $('#completed_task').append(data);  // Append updated tasks to the "Completed" section
+                } else {
+                    console.error('Error moving tasks to Completed', data.message);
+                }
+                location.reload()
+            },
+            error: function(error) {
+                console.error('Error moving tasks to Completed', error);
+            }
+        });
+    }
+    else{
+        alert('Please Select Progress Task')
+    }
+}
+function move_to_hold() {
+    const selectedTasks = $('.task-checkbox:checked')
+
+    if (selectedTasks.length > 0) {
+        const taskIds = selectedTasks.map(function() {
+            return $(this).attr('data-task-id'); // Use attr() to retrieve the data attribute
+        }).get();
+        $.ajax({
+            url: '/move-to-hold/',
+            method: 'POST',
+            data: { task_ids: taskIds, csrfmiddlewaretoken: '{{ csrf_token }}' },
+            success: function(data) {
+                if (data.success) {
+                    selectedTasks.closest('li').remove();
+                    $('#hold_task').append(data);  // Append updated tasks to the "Completed" section
                 } else {
                     console.error('Error moving tasks to Completed', data.message);
                 }
